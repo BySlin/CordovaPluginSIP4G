@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin id="cordova-plugin-sip" version="1.2.0" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>SIP - LinPhone</name>
+    <description>A plugin to integrate linphone features to cordova</description>
+    <license>MIT</license>
+    <keywords>sip,cordova,phonegap,linphone,liblinphone</keywords>
+
+    <engines>
+        <engine name="cordova-android" version=">=4.0.0-dev"/>
+    </engines>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+            <uses-feature
+                    android:name="android.hardware.camera"
+                    android:required="false"/>
+            <uses-feature
+                    android:name="android.hardware.camera.autofocus"
+                    android:required="false"/>
+        </config-file>
+        <config-file target="config.xml" parent="/*">
+            <feature name="Linphone">
+                <param name="android-package" value="com.sip.linphone.Linphone"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/src/Linphone.java" target-dir="src/com/sip/linphone"/>
+        <source-file src="src/android/src/LinphoneMiniActivity.java" target-dir="src/com/sip/linphone"/>
+        <source-file src="src/android/src/LinphoneMiniManager.java" target-dir="src/com/sip/linphone"/>
+        <source-file src="src/android/src/LinphoneMiniUtils.java" target-dir="src/com/sip/linphone"/>
+        <source-file src="src/android/res/layout/incall.xml" target-dir="res/layout"/>
+        <source-file src="src/android/res/raw/linphonerc_default" target-dir="res/raw"/>
+        <source-file src="src/android/res/raw/linphonerc_factory" target-dir="res/raw"/>
+        <source-file src="src/android/res/raw/lpconfig.xsd" target-dir="res/raw"/>
+        <source-file src="src/android/res/raw/ringback.wav" target-dir="res/raw"/>
+        <source-file src="src/android/res/raw/rootca.pem" target-dir="res/raw"/>
+        <source-file src="src/android/res/raw/oldphone_mono.wav" target-dir="res/raw"/>
+        <source-file src="src/android/res/raw/vcard_grammar" target-dir="res/raw"/>
+
+        <framework src="src/android/libs/sip.gradle" custom="true" type="gradleReference"/>
+
+        <js-module src="www/cordova-plugins-sip.js" name="linphone">
+            <merges target="cordova.plugins.sip"/>
+        </js-module>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+            <uses-permission android:name="android.permission.CAMERA"/>
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+            <uses-permission android:name="android.permission.WAKE_LOCK"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-feature android:name="android.hardware.microphone" android:required="true"/>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.sip.linphone.LinphoneMiniActivity"
+                      android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        </config-file>
+    </platform>
+</plugin>
