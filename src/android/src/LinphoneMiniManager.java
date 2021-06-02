@@ -399,7 +399,7 @@ public class LinphoneMiniManager implements CoreListener {
     if (registrationState == RegistrationState.Ok) {
       mLoginCallbackContext.sendPluginResult(callbacCustom("Ok"));
     } else if (registrationState == RegistrationState.Failed) {
-      mLoginCallbackContext.sendPluginResult(callbacCustom("RegistrationFailed:: " + s));
+      mLoginCallbackContext.sendPluginResult(callbacCustom("ServiceUnavailable"));
     } else if (registrationState == RegistrationState.Progress) {
       mLoginCallbackContext.sendPluginResult(callbacCustom("Trying"));
     }
