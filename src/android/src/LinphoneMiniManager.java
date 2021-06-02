@@ -264,11 +264,11 @@ public class LinphoneMiniManager implements CoreListener {
   }
 
   public boolean toggleEnableCamera() {
-       /* if (mCore.inCall()) {
-            boolean enabled = !mCore.getCurrentCall().cameraEnabled();
-            enableCamera(mCore.getCurrentCall(), enabled);
-            return enabled;
-        }*/
+    if (mCore.inCall()) {
+      boolean enabled = !mCore.getCurrentCall().cameraEnabled();
+      enableCamera(mCore.getCurrentCall(), enabled);
+      return enabled;
+    }
     return false;
   }
 
