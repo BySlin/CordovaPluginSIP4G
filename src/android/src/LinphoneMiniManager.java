@@ -329,8 +329,7 @@ public class LinphoneMiniManager implements CoreListener {
     mCallbackContext = callbackContext;
   }
 
-  public void acceptCall(CallbackContext callbackContext) {
-    mCallbackContext = callbackContext;
+  public void acceptCall() {
     Call call = mCore.getCurrentCall();
     if (call != null) {
       call.accept();
@@ -338,9 +337,7 @@ public class LinphoneMiniManager implements CoreListener {
 
   }
 
-  public void call(String address, String displayName, CallbackContext callbackContext) {
-
-    mCallbackContext = callbackContext;
+  public void call(String address, String displayName) {
     newOutgoingCall(address, displayName);
   }
 

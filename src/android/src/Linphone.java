@@ -74,7 +74,7 @@ public class Linphone extends CordovaPlugin {
     } else if (action.equals("call")) {
       cordova.getThreadPool().execute(() -> {
         try {
-          call(args.getString(0), args.getString(1), callbackContext);
+          call(args.getString(0), args.getString(1));
         } catch (Exception e) {
           Log.d("call error", e.getMessage());
         }
@@ -92,7 +92,7 @@ public class Linphone extends CordovaPlugin {
     } else if (action.equals("acceptCall")) {
       cordova.getThreadPool().execute(() -> {
         try {
-          acceptCall(args.getBoolean(0), callbackContext);
+          acceptCall(args.getBoolean(0));
         } catch (Exception e) {
           Log.d("acceptCall error", e.getMessage());
         }
@@ -238,10 +238,10 @@ public class Linphone extends CordovaPlugin {
     }
   }
 
-  public static synchronized void call(final String address, final String displayName, final CallbackContext callbackContext) {
+  public static synchronized void call(final String address, final String displayName) {
     try {
 
-      mLinphoneManager.call(address, displayName, callbackContext);
+      mLinphoneManager.call(address, displayName);
 
     } catch (Exception e) {
       Log.d("call error", e.getMessage());
@@ -261,9 +261,9 @@ public class Linphone extends CordovaPlugin {
     mLinphoneManager.listenCall(callbackContext);
   }
 
-  public static synchronized void acceptCall(final boolean isAcceptCall, final CallbackContext callbackContext) {
+  public static synchronized void acceptCall(final boolean isAcceptCall) {
     if (isAcceptCall) {
-      mLinphoneManager.acceptCall(callbackContext);
+      mLinphoneManager.acceptCall();
     } else {
       mLinphoneManager.terminateCall();
     }
