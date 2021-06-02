@@ -255,7 +255,6 @@ public class LinphoneMiniManager implements CoreListener {
     }
   }
 
-
   public void terminateCall() {
     if (mCore.inCall()) {
       Call c = mCore.getCurrentCall();
@@ -391,17 +390,18 @@ public class LinphoneMiniManager implements CoreListener {
 
   public PluginResult callbacCustom(String message) {
     PluginResult result = new PluginResult(PluginResult.Status.OK, message);
-    //result.setKeepCallback(true);
+    result.setKeepCallback(true);
     return result;
   }
 
   @Override
   public void onRegistrationStateChanged(Core core, ProxyConfig proxyConfig, RegistrationState registrationState, String s) {
     if (registrationState == RegistrationState.Ok) {
-      mLoginCallbackContext.sendPluginResult(callbacCustom("RegistrationSuccess"));
-
+      mLoginCallbackContext.sendPluginResult(callbacCustom("Ok"));
     } else if (registrationState == RegistrationState.Failed) {
       mLoginCallbackContext.sendPluginResult(callbacCustom("RegistrationFailed:: " + s));
+    } else if (registrationState == RegistrationState.Progress) {
+      mLoginCallbackContext.sendPluginResult(callbacCustom("Trying"));
     }
   }
 
@@ -409,15 +409,15 @@ public class LinphoneMiniManager implements CoreListener {
   public void onCallStateChanged(Core core, Call call, State state, String s) {
     if (state == State.Connected) {
       toggleEnableSpeaker(true);
-      mCallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Connected"));
+      mCallbackContext.sendPluginResult(callbacCustom("Connected"));
     } else if (state == State.IncomingReceived) {
-      mCallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Incoming"));
+      mCallbackContext.sendPluginResult(callbacCustom("Incoming"));
     } else if (state == State.End) {
       toggleEnableSpeaker(false);
-      mCallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "End"));
+      mCallbackContext.sendPluginResult(callbacCustom("End"));
     } else if (state == State.Error) {
       toggleEnableSpeaker(false);
-      mCallbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Error"));
+      mCallbackContext.sendPluginResult(callbacCustom("Error"));
     }
     Log.d("Call state: " + state + "(" + s + ")");
   }
