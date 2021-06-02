@@ -1,156 +1,156 @@
 module.exports =
-{
-    login: function (username, password, domain, transport, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "login",
-            [username, password, domain, transport]
-        );
+  {
+    login: function (username, password, domain, realm, regExpirationTimeout, successCallback, errorCallback) {
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "login",
+        [username, password, domain, realm, regExpirationTimeout]
+      );
     },
     logout: function (successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "logout",
-            []
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "logout",
+        []
+      );
     },
     accept: function (value, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "acceptCall",
-            [value]
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "acceptCall",
+        [value]
+      );
     },
     listenCall: function (successCallback, errorCallback) {
-        cordova.exec(
-                successCallback,
-                errorCallback,
-                "Linphone",
-                "listenCall",
-                []
-            );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "listenCall",
+        []
+      );
     },
     call: function (address, displayName, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "call",
-            [address, displayName]
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "call",
+        [address, displayName]
+      );
     },
     videocall: function (address, displayName, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "videocall",
-            [address, displayName]
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "videocall",
+        [address, displayName]
+      );
     },
     hangup: function (successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "hangup",
-            []
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "hangup",
+        []
+      );
     },
     toggleVideo: function (successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "toggleVideo",
-            []
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "toggleVideo",
+        []
+      );
     },
     toggleSpeaker: function (enable, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "toggleSpeaker",
-            [enable]
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "toggleSpeaker",
+        [enable]
+      );
     },
     toggleMute: function (successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "toggleMute",
-            []
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "toggleMute",
+        []
+      );
     },
     sendDtmf: function (number, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "sendDtmf",
-            [number]
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "sendDtmf",
+        [number]
+      );
     },
     updateRegister: function (successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "updateRegister",
-            []
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "updateRegister",
+        []
+      );
     },
     getRemoteContact: function (successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "getRemoteContact",
-            []
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "getRemoteContact",
+        []
+      );
     },
     setLowBandwidth: function (enable, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "lowBandwidth",
-            [enable]
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "lowBandwidth",
+        [enable]
+      );
     },
     setMicrophoneVolumeGain: function (value, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "setMicrophoneVolumeGain",
-            [value]
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "setMicrophoneVolumeGain",
+        [value]
+      );
     },
     setMicGainDb: function (value, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "setMicGainDb",
-            [value]
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "setMicGainDb",
+        [value]
+      );
     },
     setPlaybackGainDb: function (value, successCallback, errorCallback) {
-        cordova.exec(
-            successCallback,
-            errorCallback,
-            "Linphone",
-            "setPlaybackGainDb",
-            [value]
-        );
+      cordova.exec(
+        successCallback,
+        errorCallback,
+        "Linphone",
+        "setPlaybackGainDb",
+        [value]
+      );
     }
-};
+  };

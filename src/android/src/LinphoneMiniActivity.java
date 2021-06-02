@@ -35,77 +35,77 @@ import org.linphone.mediastream.video.AndroidVideoWindowImpl;
  * @author Sylvain Berfini
  */
 public class LinphoneMiniActivity extends Activity {
-	private SurfaceView mVideoView;
-	private SurfaceView mCaptureView;
-	private AndroidVideoWindowImpl androidVideoWindowImpl;
+  private SurfaceView mVideoView;
+  private SurfaceView mCaptureView;
+  private AndroidVideoWindowImpl androidVideoWindowImpl;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
 
-        Resources R = getApplication().getResources();
-        String packageName = getApplication().getPackageName();
+    Resources R = getApplication().getResources();
+    String packageName = getApplication().getPackageName();
 
-        setContentView(R.getIdentifier("incall", "layout", packageName));
+    setContentView(R.getIdentifier("incall", "layout", packageName));
 
-        mVideoView = (SurfaceView) findViewById(R.getIdentifier("videoSurface", "id", packageName));
-        mCaptureView = (SurfaceView) findViewById(R.getIdentifier("videoCaptureSurface", "id", packageName));
-        mCaptureView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+    mVideoView = (SurfaceView) findViewById(R.getIdentifier("videoSurface", "id", packageName));
+    mCaptureView = (SurfaceView) findViewById(R.getIdentifier("videoCaptureSurface", "id", packageName));
+    mCaptureView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-        fixZOrder(mVideoView, mCaptureView);
+    fixZOrder(mVideoView, mCaptureView);
 
-        androidVideoWindowImpl = new AndroidVideoWindowImpl(mVideoView, mCaptureView, new AndroidVideoWindowImpl.VideoWindowListener() {
-            public void onVideoRenderingSurfaceReady(AndroidVideoWindowImpl vw, SurfaceView surface) {
-                Log.d("onVideoRenderingSurfaceReady");
-                Core lc = Linphone.mLinphoneCore;
-                if (lc != null) {
-                    Call c = lc.getCurrentCall();
-                    if(c != null){
-                        c.setNativeVideoWindowId(vw);
-                    }
-                }
-                mVideoView = surface;
-            }
+    androidVideoWindowImpl = new AndroidVideoWindowImpl(mVideoView, mCaptureView, new AndroidVideoWindowImpl.VideoWindowListener() {
+      public void onVideoRenderingSurfaceReady(AndroidVideoWindowImpl vw, SurfaceView surface) {
+        Log.d("onVideoRenderingSurfaceReady");
+        Core lc = Linphone.mLinphoneCore;
+        if (lc != null) {
+          Call c = lc.getCurrentCall();
+          if (c != null) {
+            c.setNativeVideoWindowId(vw);
+          }
+        }
+        mVideoView = surface;
+      }
 
-            public void onVideoRenderingSurfaceDestroyed(AndroidVideoWindowImpl vw) {
-                Log.d("onVideoRenderingSurfaceDestroyed");
-                Core lc = Linphone.mLinphoneCore;
-                if (lc != null) {
-                    Call c = lc.getCurrentCall();
-                    if(c != null){
-                        c.setNativeVideoWindowId(null);
-                    }
-                }
-            }
+      public void onVideoRenderingSurfaceDestroyed(AndroidVideoWindowImpl vw) {
+        Log.d("onVideoRenderingSurfaceDestroyed");
+        Core lc = Linphone.mLinphoneCore;
+        if (lc != null) {
+          Call c = lc.getCurrentCall();
+          if (c != null) {
+            c.setNativeVideoWindowId(null);
+          }
+        }
+      }
 
-            public void onVideoPreviewSurfaceReady(AndroidVideoWindowImpl vw, SurfaceView surface) {
-                Log.d("onVideoPreviewSurfaceReady");
-                mCaptureView = surface;
-                Linphone.mLinphoneCore.setNativePreviewWindowId(mCaptureView);
+      public void onVideoPreviewSurfaceReady(AndroidVideoWindowImpl vw, SurfaceView surface) {
+        Log.d("onVideoPreviewSurfaceReady");
+        mCaptureView = surface;
+        Linphone.mLinphoneCore.setNativePreviewWindowId(mCaptureView);
 
-            }
+      }
 
-            public void onVideoPreviewSurfaceDestroyed(AndroidVideoWindowImpl vw) {
-                Log.d("onVideoPreviewSurfaceDestroyed");
-                // Remove references kept in jni code and restart camera
-                Linphone.mLinphoneCore.setNativePreviewWindowId(null);
-            }
-        });
+      public void onVideoPreviewSurfaceDestroyed(AndroidVideoWindowImpl vw) {
+        Log.d("onVideoPreviewSurfaceDestroyed");
+        // Remove references kept in jni code and restart camera
+        Linphone.mLinphoneCore.setNativePreviewWindowId(null);
+      }
+    });
 
-        Intent i = getIntent();
-        Bundle extras = i.getExtras();
-        String address = extras.getString("address");
-        String displayName = extras.getString("displayName");		
-        String videoDeviceId = Linphone.mLinphoneCore.getVideoDevice();
-        Linphone.mLinphoneCore.setVideoDevice(videoDeviceId);
-        Linphone.mLinphoneManager.newOutgoingCall(address, displayName);
-	}
+    Intent i = getIntent();
+    Bundle extras = i.getExtras();
+    String address = extras.getString("address");
+    String displayName = extras.getString("displayName");
+    String videoDeviceId = Linphone.mLinphoneCore.getVideoDevice();
+    Linphone.mLinphoneCore.setVideoDevice(videoDeviceId);
+    Linphone.mLinphoneManager.newOutgoingCall(address, displayName);
+  }
 
-    private void fixZOrder(SurfaceView video, SurfaceView preview) {
-        video.setZOrderOnTop(false);
-        preview.setZOrderOnTop(true);
-        preview.setZOrderMediaOverlay(true); // Needed to be able to display control layout over
-    }
+  private void fixZOrder(SurfaceView video, SurfaceView preview) {
+    video.setZOrderOnTop(false);
+    preview.setZOrderOnTop(true);
+    preview.setZOrderMediaOverlay(true); // Needed to be able to display control layout over
+  }
 
 //    public void switchCamera() {
 //        try {
@@ -124,66 +124,66 @@ public class LinphoneMiniActivity extends Activity {
 //        }
 //    }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
+  @Override
+  protected void onResume() {
+    super.onResume();
 
-        if (mVideoView != null) {
-            ((GLSurfaceView) mVideoView).onResume();
-        }
-
-        if (androidVideoWindowImpl != null) {
-            synchronized (androidVideoWindowImpl) {
-                Core lc = Linphone.mLinphoneCore;
-                if (lc != null) {
-                    Call c = lc.getCurrentCall();
-                    if(c != null){
-                        c.setNativeVideoWindowId(androidVideoWindowImpl);
-                    }
-                }
-            }
-        }
-
+    if (mVideoView != null) {
+      ((GLSurfaceView) mVideoView).onResume();
     }
 
-	@Override
-	protected void onPause() {
-        if (androidVideoWindowImpl != null) {
-            synchronized (androidVideoWindowImpl) {
-				/*
-				 * this call will destroy native opengl renderer which is used by
-				 * androidVideoWindowImpl
-				 */
-                Core lc = Linphone.mLinphoneCore;
-                if (lc != null) {
-                    Call c = lc.getCurrentCall();
-                    if(c != null){
-                        c.setNativeVideoWindowId(null);
-                    }
-                }
-            }
+    if (androidVideoWindowImpl != null) {
+      synchronized (androidVideoWindowImpl) {
+        Core lc = Linphone.mLinphoneCore;
+        if (lc != null) {
+          Call c = lc.getCurrentCall();
+          if (c != null) {
+            c.setNativeVideoWindowId(androidVideoWindowImpl);
+          }
         }
+      }
+    }
 
-        if (mVideoView != null) {
-            ((GLSurfaceView) mVideoView).onPause();
+  }
+
+  @Override
+  protected void onPause() {
+    if (androidVideoWindowImpl != null) {
+      synchronized (androidVideoWindowImpl) {
+        /*
+         * this call will destroy native opengl renderer which is used by
+         * androidVideoWindowImpl
+         */
+        Core lc = Linphone.mLinphoneCore;
+        if (lc != null) {
+          Call c = lc.getCurrentCall();
+          if (c != null) {
+            c.setNativeVideoWindowId(null);
+          }
         }
+      }
+    }
 
-		super.onPause();
-	}
+    if (mVideoView != null) {
+      ((GLSurfaceView) mVideoView).onPause();
+    }
 
-	@Override
-	protected void onDestroy() {
-        mCaptureView = null;
-        if (mVideoView != null) {
-            mVideoView.setOnTouchListener(null);
-            mVideoView = null;
-        }
-        if (androidVideoWindowImpl != null) {
-            // Prevent linphone from crashing if correspondent hang up while you are rotating
-            androidVideoWindowImpl.release();
-            androidVideoWindowImpl = null;
-        }
+    super.onPause();
+  }
 
-		super.onDestroy();
-	}
+  @Override
+  protected void onDestroy() {
+    mCaptureView = null;
+    if (mVideoView != null) {
+      mVideoView.setOnTouchListener(null);
+      mVideoView = null;
+    }
+    if (androidVideoWindowImpl != null) {
+      // Prevent linphone from crashing if correspondent hang up while you are rotating
+      androidVideoWindowImpl.release();
+      androidVideoWindowImpl = null;
+    }
+
+    super.onDestroy();
+  }
 }

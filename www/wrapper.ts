@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Plugin, IonicNativePlugin, Cordova } from '@ionic-native/core';
+import {Injectable} from '@angular/core';
+import {Plugin, IonicNativePlugin, Cordova} from '@ionic-native/core';
 
 @Plugin({
     pluginName: 'Linphone', // should match the name of the wrapper class
@@ -13,14 +13,22 @@ import { Plugin, IonicNativePlugin, Cordova } from '@ionic-native/core';
 export class Linphone extends IonicNativePlugin {
 
     @Cordova()
-    login(username: string, password: string, domain: string): Promise<any> { return; }
+    login(username: string, password: string, domain: string): Promise<any> {
+        return;
+    }
 
     @Cordova()
-    call(address: string, displayName: string): Promise<any> { return; }
+    call(address: string, displayName: string): Promise<any> {
+        return;
+    }
 
     @Cordova()
-    hangup(): Promise<any> { return; }
+    hangup(): Promise<any> {
+        return;
+    }
 
     @Cordova()
-    listenCall(): Promise<any> { return; }
+    listenCall(): Promise<any> {
+        return;
+    }
 }
