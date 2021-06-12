@@ -1,12 +1,15 @@
 repositories {
     maven {
-        url "http://linphone.org/releases/maven_repository"
+        name "linphone.org maven repository"
+        url "https://linphone.org/maven_repository"
+        content {
+            includeGroup "org.linphone"
+        }
     }
 }
 
 dependencies {
-    debugImplementation "org.linphone:linphone-sdk-android-debug:4.5+"
-    releaseImplementation "org.linphone:linphone-sdk-android:4.5+"
+    implementation 'org.linphone:linphone-sdk-android:5.0+'
 }
 
 android {
