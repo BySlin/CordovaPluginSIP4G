@@ -110,7 +110,7 @@ public class Linphone extends CordovaPlugin {
     } else if (action.equals("hangup")) {
       cordova.getThreadPool().execute(() -> {
         try {
-          hangup(callbackContext);
+          hangup();
         } catch (Exception e) {
           Log.d("hangup error", e.getMessage());
         }
@@ -248,9 +248,9 @@ public class Linphone extends CordovaPlugin {
     }
   }
 
-  public static synchronized void hangup(final CallbackContext callbackContext) {
+  public static synchronized void hangup() {
     try {
-      mLinphoneManager.hangup(callbackContext);
+      mLinphoneManager.hangup();
     } catch (Exception e) {
       Log.d("hangup error", e.getMessage());
     }

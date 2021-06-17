@@ -74,7 +74,6 @@ public class LinphoneMiniManager implements CoreListener {
   @SuppressLint("StaticFieldLeak")
   public static Context mContext;
   public static Core mCore;
-  //public static LinphonePreferences mPrefs;
   public static Timer mTimer;
   @SuppressLint("StaticFieldLeak")
   public static SurfaceView mCaptureView;
@@ -84,8 +83,6 @@ public class LinphoneMiniManager implements CoreListener {
   public LinphoneMiniManager(Context c) {
     mContext = c;
     Factory.instance().setDebugMode(true, "Linphone Mini");
-    //mPrefs = LinphonePreferences.instance();
-
 
     try {
 
@@ -185,14 +182,10 @@ public class LinphoneMiniManager implements CoreListener {
   }
 
   private void initCoreValues(String basePath) {
-//		mCore.setContext(mContext);
     mCore.setRing(null);
     mCore.setRootCa(basePath + "/rootca.pem");
     mCore.setPlayFile(basePath + "/toy_mono.wav");
     mCore.setCallLogsDatabasePath(basePath + "/linphone-history.db");
-
-//		int availableCores = Runtime.getRuntime().availableProcessors();
-//		mCore.getConfig(availableCores);
   }
 
   public void newOutgoingCall(String to, String displayName) {
@@ -238,9 +231,7 @@ public class LinphoneMiniManager implements CoreListener {
   }
 
   public boolean setMicGainDb(String value) {
-
     try {
-
       mCore.setMicGainDb(Float.parseFloat(value));
       return true;
     } catch (Exception e) {
@@ -276,27 +267,21 @@ public class LinphoneMiniManager implements CoreListener {
   }
 
   public boolean toggleEnableSpeaker(boolean speaker) {
-
     final Context context = mContext;
     final AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
     if (speaker) {
       audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
       audioManager.setSpeakerphoneOn(true);
-
-
 			/*int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
 			audioManager.setStreamVolume(AudioManager.STREAM_ALARM, maxVolume, 0);*/
-
     } else {
       audioManager.setMode(AudioManager.MODE_NORMAL);
       audioManager.setSpeakerphoneOn(false);
     }
-
     return speaker;
 
   }
-
 
   public boolean toggleMute() {
     if (mCore.inCall()) {
@@ -338,14 +323,13 @@ public class LinphoneMiniManager implements CoreListener {
     if (call != null) {
       call.accept();
     }
-
   }
 
   public void call(String address, String displayName) {
     newOutgoingCall(address, displayName);
   }
 
-  public void hangup(CallbackContext callbackContext) {
+  public void hangup() {
     terminateCall();
   }
 
@@ -355,13 +339,10 @@ public class LinphoneMiniManager implements CoreListener {
     Address address = lcFactory.createAddress("sip:" + username + "@" + realm);
     address.setTransport(TransportType.Tcp);
     username = address.getUsername();
-    //domain = address.getDomain();
     if (password != null) {
       mCore.addAuthInfo(lcFactory.createAuthInfo(username, null, password, null, realm, domain));
     }
 
-
-//			ProxyConfig proxyCfg = mCore.createProxyConfig("sip:" + username + "@" + domain, domain, (String)null, true);
     ProxyConfig proxyCfg = mCore.createProxyConfig();
     proxyCfg.edit();
     proxyCfg.setIdentityAddress(address);
@@ -370,10 +351,8 @@ public class LinphoneMiniManager implements CoreListener {
     proxyCfg.setRealm(realm);
     proxyCfg.done();
 
-
     mCore.addProxyConfig(proxyCfg);
     mCore.setDefaultProxyConfig(proxyCfg);
-
 
     proxyCfg.enableRegister(true);
     mLoginCallbackContext = callbackContext;
@@ -385,7 +364,6 @@ public class LinphoneMiniManager implements CoreListener {
     android.util.Log.d(TAG, globalState.name());
     android.util.Log.d(TAG, s);
   }
-
 
   public PluginResult callbacCustom(String message) {
     PluginResult result = new PluginResult(PluginResult.Status.OK, message);
@@ -478,7 +456,6 @@ public class LinphoneMiniManager implements CoreListener {
   public void onMessageReceivedUnableDecrypt(Core core, ChatRoom chatRoom, ChatMessage chatMessage) {
 
   }
-
 
   @Override
   public void onMessageSent(Core core, ChatRoom chatRoom, ChatMessage chatMessage) {
