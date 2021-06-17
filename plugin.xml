@@ -30,7 +30,6 @@
         <source-file src="src/android/src/Linphone.java" target-dir="src/com/sip/linphone"/>
         <source-file src="src/android/src/LinphoneMiniActivity.java" target-dir="src/com/sip/linphone"/>
         <source-file src="src/android/src/LinphoneMiniManager.java" target-dir="src/com/sip/linphone"/>
-        <source-file src="src/android/src/LinphoneMiniUtils.java" target-dir="src/com/sip/linphone"/>
 
         <framework src="src/android/libs/sip.gradle" custom="true" type="gradleReference"/>
 

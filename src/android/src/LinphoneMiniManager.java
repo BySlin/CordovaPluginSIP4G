@@ -290,7 +290,7 @@ public class LinphoneMiniManager extends CoreListenerStub {
     android.util.Log.d(TAG, s);
   }
 
-  public PluginResult callbacCustom(String message) {
+  public PluginResult callbackCustom(String message) {
     PluginResult result = new PluginResult(PluginResult.Status.OK, message);
     result.setKeepCallback(true);
     return result;
@@ -299,11 +299,11 @@ public class LinphoneMiniManager extends CoreListenerStub {
   @Override
   public void onAccountRegistrationStateChanged(Core core, Account account, RegistrationState state, String message) {
     if (state == RegistrationState.Ok) {
-      mLoginCallbackContext.sendPluginResult(callbacCustom("Ok"));
+      mLoginCallbackContext.sendPluginResult(callbackCustom("Ok"));
     } else if (state == RegistrationState.Failed) {
-      mLoginCallbackContext.sendPluginResult(callbacCustom("ServiceUnavailable"));
+      mLoginCallbackContext.sendPluginResult(callbackCustom("ServiceUnavailable"));
     } else if (state == RegistrationState.Progress) {
-      mLoginCallbackContext.sendPluginResult(callbacCustom("Trying"));
+      mLoginCallbackContext.sendPluginResult(callbackCustom("Trying"));
     }
   }
 
@@ -311,14 +311,13 @@ public class LinphoneMiniManager extends CoreListenerStub {
   public void onCallStateChanged(Core core, Call call, State state, String s) {
     if (state == State.Connected) {
       toggleEnableSpeaker(true);
-    } else if (state == State.IncomingReceived) {
     } else if (state == State.End) {
       toggleEnableSpeaker(false);
     } else if (state == State.Error) {
       toggleEnableSpeaker(false);
     }
 
-    mCallbackContext.sendPluginResult(callbacCustom(state.toString()));
+    mCallbackContext.sendPluginResult(callbackCustom(state.toString()));
     Log.d("Call state: " + state + "(" + s + ")");
   }
 }
