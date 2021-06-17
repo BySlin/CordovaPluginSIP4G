@@ -3,9 +3,6 @@ package com.sip.linphone;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.net.sip.SipAudioCall;
-import android.net.sip.SipManager;
-import android.net.sip.SipProfile;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -15,10 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.linphone.core.Call;
 import org.linphone.core.Core;
-import org.linphone.core.ProxyConfig;
 import org.linphone.mediastream.Log;
-
-import java.util.Timer;
 
 public class Linphone extends CordovaPlugin {
   public static Linphone mInstance;
@@ -26,14 +20,7 @@ public class Linphone extends CordovaPlugin {
   public static Core mLinphoneCore;
   public static Context mContext;
   private static final int RC_MIC_PERM = 2;
-  public static Timer mTimer;
-  public CallbackContext mListenCallback;
-  CordovaInterface cordova;
-
-  public SipManager manager = null;
-  public SipProfile me = null;
-  public SipAudioCall call = null;
-
+  public CordovaInterface cordova;
 
   @Override
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -227,9 +214,7 @@ public class Linphone extends CordovaPlugin {
   public static synchronized void logout(final CallbackContext callbackContext) {
     try {
       Log.d("logout");
-      ProxyConfig[] prxCfgs = mLinphoneManager.getLc().getProxyConfigList();
-      final ProxyConfig proxyCfg = prxCfgs[0];
-      mLinphoneManager.getLc().removeProxyConfig(proxyCfg);
+      mLinphoneManager.getLc().removeAccount(mLinphoneManager.getLc().getDefaultAccount());
       Log.d("logout sukses");
       callbackContext.success();
     } catch (Exception e) {
@@ -240,9 +225,7 @@ public class Linphone extends CordovaPlugin {
 
   public static synchronized void call(final String address, final String displayName) {
     try {
-
       mLinphoneManager.call(address, displayName);
-
     } catch (Exception e) {
       Log.d("call error", e.getMessage());
     }
@@ -257,7 +240,6 @@ public class Linphone extends CordovaPlugin {
   }
 
   public static synchronized void listenCall(final CallbackContext callbackContext) {
-
     mLinphoneManager.listenCall(callbackContext);
   }
 
@@ -298,17 +280,13 @@ public class Linphone extends CordovaPlugin {
   public static synchronized void toggleSpeaker(final String speaker, final CallbackContext callbackContext) {
     try {
       Log.d("toggleSpeaker");
-
       if ("true".equals(speaker)) {
-
         mLinphoneManager.toggleEnableSpeaker(true);
         callbackContext.success("true");
       } else {
         mLinphoneManager.toggleEnableSpeaker(false);
         callbackContext.success("false");
       }
-
-
     } catch (Exception e) {
       Log.d("toggleSpeaker error", e.getMessage());
       callbackContext.error(e.getMessage());
@@ -343,7 +321,6 @@ public class Linphone extends CordovaPlugin {
     try {
       Log.d("refreshRegisters");
       mLinphoneManager.getLc().refreshRegisters();
-
       callbackContext.success("refreshRegisters");
     } catch (Exception e) {
       Log.d("refreshRegisters error", e.getMessage());
@@ -381,10 +358,8 @@ public class Linphone extends CordovaPlugin {
 
   public static synchronized void setPlaybackGainDb(final String value, final CallbackContext callbackContext) {
     try {
-
       mLinphoneManager.setPlaybackGainDb(value);
       callbackContext.success("ok");
-
     } catch (Exception e) {
       Log.d("setPlaybackGainDb Error", e.getMessage());
       callbackContext.error(e.getMessage());
@@ -393,10 +368,8 @@ public class Linphone extends CordovaPlugin {
 
   public static synchronized void setMicGainDb(final String value, final CallbackContext callbackContext) {
     try {
-
       mLinphoneManager.setMicGainDb(value);
       callbackContext.success("ok");
-
     } catch (Exception e) {
       Log.d("setMicGainDb Error", e.getMessage());
       callbackContext.error(e.getMessage());
@@ -406,10 +379,8 @@ public class Linphone extends CordovaPlugin {
 
   public static synchronized void setMicrophoneVolumeGain(final String value, final CallbackContext callbackContext) {
     try {
-
       mLinphoneManager.setMicrophoneVolumeGain(value);
       callbackContext.success("ok");
-
     } catch (Exception e) {
       Log.d("setMicrophoneVolumeGain Error", e.getMessage());
       callbackContext.error(e.getMessage());

@@ -31,14 +31,6 @@
         <source-file src="src/android/src/LinphoneMiniActivity.java" target-dir="src/com/sip/linphone"/>
         <source-file src="src/android/src/LinphoneMiniManager.java" target-dir="src/com/sip/linphone"/>
         <source-file src="src/android/src/LinphoneMiniUtils.java" target-dir="src/com/sip/linphone"/>
-        <source-file src="src/android/res/layout/incall.xml" target-dir="res/layout"/>
-        <source-file src="src/android/res/raw/linphonerc_default" target-dir="res/raw"/>
-        <source-file src="src/android/res/raw/linphonerc_factory" target-dir="res/raw"/>
-        <source-file src="src/android/res/raw/lpconfig.xsd" target-dir="res/raw"/>
-        <source-file src="src/android/res/raw/ringback.wav" target-dir="res/raw"/>
-        <source-file src="src/android/res/raw/rootca.pem" target-dir="res/raw"/>
-        <source-file src="src/android/res/raw/oldphone_mono.wav" target-dir="res/raw"/>
-        <source-file src="src/android/res/raw/vcard_grammar" target-dir="res/raw"/>
 
         <framework src="src/android/libs/sip.gradle" custom="true" type="gradleReference"/>
 
