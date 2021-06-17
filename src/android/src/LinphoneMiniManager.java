@@ -52,6 +52,7 @@ import org.linphone.core.ProxyConfig;
 import org.linphone.core.PublishState;
 import org.linphone.core.RegistrationState;
 import org.linphone.core.SubscriptionState;
+import org.linphone.core.TransportType;
 import org.linphone.core.VersionUpdateCheckResult;
 import org.linphone.mediastream.Log;
 import org.linphone.mediastream.video.capture.hwconf.AndroidCameraConfiguration;
@@ -99,6 +100,9 @@ public class LinphoneMiniManager implements CoreListener {
       mInstance = this;
       mCore.setNetworkReachable(true); // Let's assume it's true
       mCore.addListener(this);
+      mCore.enableEchoCancellation(true);
+      mCore.enableEchoLimiter(true);
+      mCore.setMaxCalls(1);
       mCaptureView = new SurfaceView(mContext);
       mCore.start();
 
@@ -349,6 +353,7 @@ public class LinphoneMiniManager implements CoreListener {
     Factory lcFactory = Factory.instance();
 
     Address address = lcFactory.createAddress("sip:" + username + "@" + realm);
+    address.setTransport(TransportType.Tcp);
     username = address.getUsername();
     //domain = address.getDomain();
     if (password != null) {
@@ -372,9 +377,6 @@ public class LinphoneMiniManager implements CoreListener {
 
     proxyCfg.enableRegister(true);
     mLoginCallbackContext = callbackContext;
-
-    mCore.enableEchoCancellation(true);
-    mCore.enableEchoLimiter(true);
   }
 
   @Override
