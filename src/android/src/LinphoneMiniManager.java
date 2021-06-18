@@ -261,6 +261,11 @@ public class LinphoneMiniManager extends CoreListenerStub {
    * @param callbackContext
    */
   public void login(String username, String password, String domain, String realm, int regExpirationTimeout, CallbackContext callbackContext) {
+    Account defaultAccount = mCore.getDefaultAccount();
+    if (defaultAccount != null) {
+      mCore.removeAccount(defaultAccount);
+    }
+
     Factory lcFactory = Factory.instance();
 
     AuthInfo authInfo = lcFactory.createAuthInfo(username, null, password, null, null, domain);
@@ -268,7 +273,7 @@ public class LinphoneMiniManager extends CoreListenerStub {
     Address identity = lcFactory.createAddress("sip:" + username + "@" + domain);
     params.setIdentityAddress(identity);
     Address address = Factory.instance().createAddress("sip:" + domain);
-    address.setTransport(TransportType.Tcp);
+    address.setTransport(TransportType.Udp);
     params.setExpires(regExpirationTimeout);
     params.setServerAddress(address);
     params.setRegisterEnabled(true);
