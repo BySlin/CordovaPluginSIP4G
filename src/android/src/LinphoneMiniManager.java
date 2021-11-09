@@ -15,6 +15,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+import static org.linphone.mediastream.Factory.DEVICE_HAS_BUILTIN_AEC_CRAPPY;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -60,6 +62,8 @@ public class LinphoneMiniManager extends CoreListenerStub {
     mContext = c;
     Factory.instance().setDebugMode(true, "Linphone Mini");
     mCore = Factory.instance().createCore(null, null, mContext);
+
+    mCore.getMediastreamerFactory().setDeviceInfo(android.os.Build.MANUFACTURER, android.os.Build.MODEL, "Android", DEVICE_HAS_BUILTIN_AEC_CRAPPY, 500, 1024);
 
     setUserAgent();
     setFrontCamAsDefault();
